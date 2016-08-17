@@ -7,7 +7,7 @@ import {
 import { bindActionCreators } from 'redux'
 import * as appActions from './actions/appActions'
 import { connect } from 'react-redux'
-import home from './containers/home'
+import HomeView from './containers/HomeView'
 import Icon from 'react-native-vector-icons/Ionicons'
 import TabNavigator from 'react-native-tab-navigator'
 
@@ -17,28 +17,28 @@ class noderhub extends Component {
         super(props);
     }
     render() {
-        const {  selectedTab ,setSelectedTab} = this.props;
+        const {  selectedTab ,setSelectedTab } = this.props;
         
         return (
         <TabNavigator>
-          <TabNavigator.Item
-            selected={selectedTab === 'home'}
-            title="主页"
-            renderIcon={() => <Icon name={ 'ios-home' } size={30} color={'gray'}/>}
-            renderSelectedIcon={() => <Icon name={ 'ios-home' } size={30} color={'#4E78E7'}/>}
-            badgeText=""
-            onPress={() => setSelectedTab('home')}>
-            {<Text>123</Text>}
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={selectedTab === 'me'}
-            title="我"
-            renderIcon={() => <Icon name={ 'ios-person' } size={30} color={'gray'}/>}
-            renderSelectedIcon={() => <Icon name={ 'ios-person' } size={30} color={'#4E78E7'}/>}
-            badgeText=""
-            onPress={() => setSelectedTab('me')}>
-            {<Text>555</Text>}
-          </TabNavigator.Item>
+            <TabNavigator.Item
+                selected={selectedTab === 'home'}
+                title="主页"
+                renderIcon={() => <Icon name={ 'ios-home' } size={25} color={'gray'}/>}
+                renderSelectedIcon={() => <Icon name={ 'ios-home' } size={25} color={'#4E78E7'}/>}
+                badgeText=""
+                onPress={() => setSelectedTab('home')}>
+                <HomeView/>
+            </TabNavigator.Item>
+            <TabNavigator.Item
+                selected={selectedTab === 'me'}
+                title="我"
+                renderIcon={() => <Icon name={ 'ios-person' } size={25} color={'gray'}/>}
+                renderSelectedIcon={() => <Icon name={ 'ios-person' } size={25} color={'#4E78E7'}/>}
+                badgeText=""
+                onPress={() => setSelectedTab('me')}>
+                <HomeView/>
+            </TabNavigator.Item>
         </TabNavigator>
         );
   }
