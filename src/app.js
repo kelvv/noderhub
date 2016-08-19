@@ -7,7 +7,9 @@ import {
 import { bindActionCreators } from 'redux'
 import * as appActions from './actions/appActions'
 import { connect } from 'react-redux'
-import HomeView from './containers/HomeView'
+import HomeView from './containers/view/HomeView'
+import WorkView from './containers/view/WorkView'
+import MeView from './containers/view/MeView'
 import Icon from 'react-native-vector-icons/Ionicons'
 import TabNavigator from 'react-native-tab-navigator'
 
@@ -23,7 +25,7 @@ class noderhub extends Component {
         <TabNavigator>
             <TabNavigator.Item
                 selected={selectedTab === 'home'}
-                title="主页"
+                title="发现"
                 renderIcon={() => <Icon name={ 'ios-home' } size={25} color={'gray'}/>}
                 renderSelectedIcon={() => <Icon name={ 'ios-home' } size={25} color={'#4E78E7'}/>}
                 badgeText=""
@@ -31,13 +33,22 @@ class noderhub extends Component {
                 <HomeView/>
             </TabNavigator.Item>
             <TabNavigator.Item
+                selected={selectedTab === 'work'}
+                title="招聘"
+                renderIcon={() => <Icon name={ 'ios-man' } size={25} color={'gray'}/>}
+                renderSelectedIcon={() => <Icon name={ 'ios-man' } size={25} color={'#4E78E7'}/>}
+                badgeText=""
+                onPress={() => setSelectedTab('work')}>
+                <WorkView/>
+            </TabNavigator.Item>
+            <TabNavigator.Item
                 selected={selectedTab === 'me'}
-                title="我"
+                title="我的"
                 renderIcon={() => <Icon name={ 'ios-person' } size={25} color={'gray'}/>}
                 renderSelectedIcon={() => <Icon name={ 'ios-person' } size={25} color={'#4E78E7'}/>}
                 badgeText=""
                 onPress={() => setSelectedTab('me')}>
-                <HomeView/>
+                <MeView/>
             </TabNavigator.Item>
         </TabNavigator>
         );
