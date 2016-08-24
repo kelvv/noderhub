@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         margin : 10
     },
     headcontainer : {
-        flex: 1,
         flexDirection: 'row',
         alignItems : 'center'
     },
