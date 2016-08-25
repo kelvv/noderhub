@@ -7,8 +7,14 @@ let defaultDataSource = ds.cloneWithRows([])
 export default function postReducers(state = { dataSource: defaultDataSource }, action) {
   switch (action.type) {
     case FETCH_POST_LIST:
-      let ds_temp = ds.cloneWithRows(action.dataSource);
-      return Object.assign({}, state, { dataSource: ds_temp , curPage: action.page });
+      let dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+      if (action.page > 1) {
+        dataSource = dataSource.cloneWithRows(state.posts.concat(action.posts))
+        return Object.assign({}, state, { dataSource: dataSource, posts: state.posts.concat(action.posts), curPage: action.page })
+      } else {
+        dataSource = dataSource.cloneWithRows(action.posts);
+        return Object.assign({}, state, { dataSource: dataSource, posts: action.posts, curPage: action.page })
+      }
     case FRESH_POST_START:
       return Object.assign({}, state, { refreshing: true })
     case FRESH_POST_FINISH:

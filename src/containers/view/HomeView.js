@@ -10,7 +10,7 @@ class HomeView extends Component {
     return (
       <View style={{flex:1}}>
           <Header title="NoderHub"/>
-          <TabTitle title="全部帖子"/>
+          <TabTitle title="全部帖子" />
           <PostList/>
       </View>
     );

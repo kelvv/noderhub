@@ -2,26 +2,36 @@ import React, { Component } from 'react';
 import {  StyleSheet , Text , View , Image ,TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Tag from '../../components/Tag'
+const env=  require('../../config/env.json')
+import {formatDate} from '../../common/dateHandler'
 
 class PostRow extends Component {
   render() {
+    this.props.data.author.avatar_url = this.props.data.author.avatar_url.startsWith('https:')?
+            this.props.data.author.avatar_url:'https:'+this.props.data.author.avatar_url
+    
+    this.props.data.tab = this.props.data.tab===""?"分享" :this.props.data.tab
+    if(this.props.data.tab==='job'){
+        return false;
+    }
     return (
+        
         <View style={styles.container}>  
             <View style={styles.headcontainer}>  
-                <Image style={styles.head} source={require('../../images/head.png')}/>
-                <Text style={styles.name}>kelvv</Text>
-                <Text style={styles.smallGray}>5小时前</Text>
+                <Image style={styles.head} source={{uri:this.props.data.author.avatar_url}}/>
+                <Text style={styles.name}>{this.props.data.author.loginname}</Text>
+                <Text style={styles.time}>{formatDate(this.props.data.last_reply_at,true)}</Text>
             </View> 
             <TouchableHighlight  onPress={this.props._renderDetial}>
-                <Text style={styles.title}>【原创分享】Nodejs跨平台轻量级图片编解码库【增加Jpeg质量调整】</Text>
+                <Text style={styles.title}>{this.props.data.title}</Text>
             </TouchableHighlight>
             <View style={styles.headcontainer}>  
-                <Tag style={styles.tag} content="精华"/>
+                <Tag style={styles.tag} content={env.tags[this.props.data.tab]}/>
                 <Text style={styles.smallGray}>阅读 </Text>
-                <Text style={styles.smallGray}>300 </Text>
-                <Text style={styles.smallGray}>| </Text>
+                <Text style={styles.smallGray}>{this.props.data.visit_count}</Text>
+                <Text style={styles.smallGray}> | </Text>
                 <Text style={styles.smallGray}>评论 </Text>
-                <Text style={styles.smallGray}>8 </Text>
+                <Text style={styles.smallGray}>{this.props.data.reply_count}</Text>
             </View> 
         </View> 
     );
@@ -37,12 +47,17 @@ const styles = StyleSheet.create({
         alignItems : 'center'
     },
     head : {
-        width : 30,
-        height : 30
+        width : 27,
+        height : 27
     },
     name: {
         fontSize : 15 ,
-        marginRight : 5
+        marginRight : 5,
+        marginLeft : 5
+    },
+    time : {
+        fontSize : 10 ,
+        color : 'gray'
     },
     smallGray : {
         fontSize : 10 ,

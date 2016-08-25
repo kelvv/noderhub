@@ -11,30 +11,41 @@ import PostRow from './PostRow'
 
 
 class PostList extends Component {
-
+  constructor(props) {
+    super(props);
+    const { getPostList } = this.props;
+    getPostList(1);
+  }
 
   _renderRow(row){
     return (
-      <PostRow/>
+      <PostRow style={styles.row} data={row}/>
     )
   } 
 
   _nextPage(){
-     const { dataSource , getPostNext , curPage , refreshing } = this.props;
-     if(dataSource.length===0 || refreshing){
+     const { posts , getPostNext , curPage , refreshing  } = this.props;
+     if( posts.length == 0 || refreshing ){
         return
      }
      getPostNext(curPage+1)
   }
 
   _renderFooter() {
-    <ActivityIndicator
+    return (
+      <ActivityIndicator
         animating = {this.props.fetchingNext}
         style = {{ height: 80 }
         }
         size = "large"
-    />
-    
+        />
+    )
+  }
+
+  _renderSeparator(){
+    return (
+      <View style={styles.separator}></View>
+    )
   }
 
   _onRefresh() {
@@ -43,38 +54,54 @@ class PostList extends Component {
   }
 
   render() {
-    const { dataSource , refreshing = true} = this.props;
+    const { dataSource , refreshing } = this.props;
     return (
-        <ListView
-            dataSource={dataSource}
-            renderRow={this._renderRow.bind(this) }
-            enableEmptySections={true}
-            onEndReached={this._nextPage.bind(this) }
-            onEndReachedThreshold={0}
-            contentInset={{ top: -20 }}
-            contentOffset={ { y: 20 }}
-            renderFooter={this._renderFooter.bind(this) }
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={this._onRefresh.bind(this) }
-                tintColor="#000"
-                title="加载中..."
-                titleColor="#000"
-                colors={['#ff0000', '#00ff00', '#0000ff']}
-                progressBackgroundColor="#000"
-                />}
-            />
+      <ListView style={styles.container}
+          dataSource={dataSource}
+          renderRow={this._renderRow.bind(this) }
+          enableEmptySections={true}
+          onEndReached={this._nextPage.bind(this) }
+          onEndReachedThreshold={0}
+          contentInset={{ top: -20 }}
+          contentOffset={ { y: 20 }}
+          renderFooter={this._renderFooter.bind(this) }
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this._onRefresh.bind(this) }
+              tintColor="#000"
+              title="加载中..."
+              titleColor="#000"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="#000"
+              />}
+              renderSeparator={this._renderSeparator.bind(this)}
+          />
     );
   }
 }
 
+const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+      backgroundColor: '#fff',
+      paddingTop : 15
+    },
+    separator:{
+        height : 1,
+        backgroundColor : '#DEDEDE',
+        marginLeft : 15,
+        marginRight : 15
+    }
+});
+
 export default connect(
   state => ({
     dataSource : state.post.dataSource,
-    refreshing : state.post.refreshing,
-    fetchingNext : state.post.fetchingNext,
-    curPage: state.post.curPage || 0
+    refreshing : state.post.refreshing || false ,
+    fetchingNext : state.post.fetchingNext || false ,
+    curPage: state.post.curPage || 1,
+    posts: state.post.posts || [],
   }),
   dispatch => ({
     getPostList : (page) => dispatch(postActions.getPostList(page)),
