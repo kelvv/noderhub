@@ -101,7 +101,7 @@ export default connect(
     refreshing : state.post.refreshing || false ,
     fetchingNext : state.post.fetchingNext || false ,
     curPage: state.post.curPage || 1,
-    posts: state.post.posts || [],
+    posts: state.post.posts || []
   }),
   dispatch => ({
     getPostList : (page) => dispatch(postActions.getPostList(page)),

@@ -4,13 +4,18 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 class Tag extends Component {
   render() {
-    return (
-        <View style={styles.container}> 
-            <View style={styles.border}> 
-                <Text style={styles.content}>{this.props.content}</Text>
+    if(this.props.visibility){
+          return (
+            <View style={styles.container}> 
+                <View style={styles.border}> 
+                    <Text style={styles.content}>{this.props.content}</Text>
+                </View> 
             </View> 
-        </View> 
-    );
+        );  
+    }else{
+        return null;
+    }
+    
   }
 }
 

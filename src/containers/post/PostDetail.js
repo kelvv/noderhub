@@ -4,7 +4,7 @@ import Tag from '../../components/Tag'
 const env=  require('../../config/env.json')
 import {formatDate} from '../../utils/dateHandler'
 
-class PostRow extends Component {
+class PostDetail extends Component {
   render() {
     this.props.data.author.avatar_url = this.props.data.author.avatar_url.startsWith('https:')?
             this.props.data.author.avatar_url:'https:'+this.props.data.author.avatar_url
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default PostRow
+export default PostDetail
