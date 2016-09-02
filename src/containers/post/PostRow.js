@@ -16,26 +16,27 @@ class PostRow extends Component {
     if(this.props.data.top){
         this.props.data.tab = 'top'
     }
-    return (
-        
-        <View style={styles.container}>  
-            <View style={styles.headcontainer}>  
-                <Image style={styles.head} source={{uri:this.props.data.author.avatar_url}}/>
-                <Text style={styles.name}>{this.props.data.author.loginname}</Text>
-                <Text style={styles.time}>{formatDate(this.props.data.last_reply_at,true)}</Text>
+    return (    
+        <TouchableHighlight onPress={this.props._renderDetial}>
+            <View style={styles.container}>  
+                <View style={styles.headcontainer}>  
+                    <Image style={styles.head} source={{uri:this.props.data.author.avatar_url}}/>
+                    <Text style={styles.name}>{this.props.data.author.loginname}</Text>
+                    <Text style={styles.time}>{formatDate(this.props.data.last_reply_at,true)}</Text>
+                </View> 
+                <TouchableHighlight  >
+                    <Text style={styles.title}>{this.props.data.title}</Text>
+                </TouchableHighlight>
+                <View style={styles.headcontainer}>  
+                    <Tag style={styles.tag} content={env.tags[this.props.data.tab]} visibility={this.props.data.tab && this.props.data.tab!==""}/>
+                    <Text style={styles.smallGray}>阅读 </Text>
+                    <Text style={styles.smallGray}>{this.props.data.visit_count}</Text>
+                    <Text style={styles.smallGray}> | </Text>
+                    <Text style={styles.smallGray}>评论 </Text>
+                    <Text style={styles.smallGray}>{this.props.data.reply_count}</Text>
+                </View> 
             </View> 
-            <TouchableHighlight  onPress={this.props._renderDetial}>
-                <Text style={styles.title}>{this.props.data.title}</Text>
-            </TouchableHighlight>
-            <View style={styles.headcontainer}>  
-                <Tag style={styles.tag} content={env.tags[this.props.data.tab]} visibility={this.props.data.tab && this.props.data.tab!==""}/>
-                <Text style={styles.smallGray}>阅读 </Text>
-                <Text style={styles.smallGray}>{this.props.data.visit_count}</Text>
-                <Text style={styles.smallGray}> | </Text>
-                <Text style={styles.smallGray}>评论 </Text>
-                <Text style={styles.smallGray}>{this.props.data.reply_count}</Text>
-            </View> 
-        </View> 
+        </TouchableHighlight>
     );
   }
 }

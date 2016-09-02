@@ -31,3 +31,9 @@ export const getPostNext = (page=1) => {
             })
     }
 }
+
+export const changeScene = (title) => {
+    return (dispatch) => {
+        dispatch({ type: types.SCENE_CHANGE , title:title })
+    }
+}

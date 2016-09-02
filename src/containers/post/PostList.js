@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {  StyleSheet, TextInput, View , TouchableHighlight , Text , ListView , ActivityIndicator,
-  RefreshControl
+  RefreshControl 
 } from 'react-native';
 import GiftedListView from 'react-native-gifted-listview'
 import GiftedSpinner from 'react-native-gifted-spinner'
+import TabTitle from '../../components/TabTitle'
 import * as postActions from '../../actions/postActions'
 import { connect } from 'react-redux'
 import PostRow from './PostRow'
-
+import PostDetail from './PostDetail'
 
 
 class PostList extends Component {
@@ -19,9 +20,18 @@ class PostList extends Component {
 
   _renderRow(row){
     return (
-      <PostRow style={styles.row} data={row}/>
+      <PostRow style={styles.row} _renderDetial={this._toDetail.bind(this,row.id)} data={row}/>
     )
   } 
+
+  _toDetail(id){
+    this.props.navigator.push({
+      component : PostDetail,
+      passData : {
+        itemId: id
+      }
+    })
+  }
 
   _nextPage(){
      const { posts , getPostNext , curPage , refreshing  } = this.props;
@@ -56,7 +66,9 @@ class PostList extends Component {
   render() {
     const { dataSource , refreshing } = this.props;
     return (
-      <ListView style={styles.container}
+      <View style={{flex: 1}}>
+          <TabTitle title="全部帖子" />
+          <ListView style={styles.container}
           dataSource={dataSource}
           renderRow={this._renderRow.bind(this) }
           enableEmptySections={true}
@@ -77,6 +89,7 @@ class PostList extends Component {
               />}
               renderSeparator={this._renderSeparator.bind(this)}
           />
+      </View>
     );
   }
 }
