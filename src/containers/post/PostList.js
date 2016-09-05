@@ -25,11 +25,13 @@ class PostList extends Component {
   } 
 
   _toDetail(id){
+    this.props.getpostDetail(id);
     this.props.navigator.push({
       component : PostDetail,
       passData : {
         itemId: id
-      }
+      },
+      title : '正文'
     })
   }
 
@@ -66,30 +68,27 @@ class PostList extends Component {
   render() {
     const { dataSource , refreshing } = this.props;
     return (
-      <View style={{flex: 1}}>
-          <TabTitle title="全部帖子" />
-          <ListView style={styles.container}
-          dataSource={dataSource}
-          renderRow={this._renderRow.bind(this) }
-          enableEmptySections={true}
-          onEndReached={this._nextPage.bind(this) }
-          onEndReachedThreshold={0}
-          contentInset={{ top: -20 }}
-          contentOffset={ { y: 20 }}
-          renderFooter={this._renderFooter.bind(this) }
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={this._onRefresh.bind(this) }
-              tintColor="#000"
-              title="加载中..."
-              titleColor="#000"
-              colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="#000"
-              />}
-              renderSeparator={this._renderSeparator.bind(this)}
-          />
-      </View>
+        <ListView style={styles.container}
+        dataSource={dataSource}
+        renderRow={this._renderRow.bind(this) }
+        enableEmptySections={true}
+        onEndReached={this._nextPage.bind(this) }
+        onEndReachedThreshold={0}
+        contentInset={{ top: -20 }}
+        contentOffset={ { y: 20 }}
+        renderFooter={this._renderFooter.bind(this) }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={this._onRefresh.bind(this) }
+            tintColor="#000"
+            title="加载中..."
+            titleColor="#000"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="#000"
+            />}
+            renderSeparator={this._renderSeparator.bind(this)}
+        />
     );
   }
 }
@@ -119,5 +118,6 @@ export default connect(
   dispatch => ({
     getPostList : (page) => dispatch(postActions.getPostList(page)),
     getPostNext : (page) => dispatch(postActions.getPostNext(page)),
+    getpostDetail : (id) => dispatch(postActions.getpostDetail(id))
   })
 )(PostList);

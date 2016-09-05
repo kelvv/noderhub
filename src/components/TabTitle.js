@@ -17,10 +17,8 @@ class TabTitle extends Component {
 
 const styles = StyleSheet.create({
     container: {  
-        flexDirection : 'row',
-        justifyContent : 'flex-start',
         height : 35,
-        margin :5
+        marginTop :65
     }, 
     head : {
         flexDirection : 'row',

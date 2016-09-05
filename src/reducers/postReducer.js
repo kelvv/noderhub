@@ -4,7 +4,7 @@ import {  ListView } from 'react-native';
 let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 != r2 })
 let defaultDataSource = ds.cloneWithRows([])
 
-export default function postReducers(state = { dataSource: defaultDataSource ,currentSceneTitle :'NoderHub'}, action) {
+export default function postReducers(state = { dataSource: defaultDataSource }, action) {
   switch (action.type) {
     case Types.FETCH_POST_LIST:
       let dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -23,8 +23,8 @@ export default function postReducers(state = { dataSource: defaultDataSource ,cu
       return Object.assign({}, state, { fetchingNext: true })
     case Types.FETCH_NEXT_PAGE_FINISH:
       return Object.assign({}, state, { fetchingNext: false })
-    case Types.SCENE_CHANGE:
-      return Object.assign({}, state, { currentSceneTitle: action.title })
+    case Types.FETCH_POST_DETAIL:
+      return Object.assign({},state,{postDetail : action.postDetail})
     default:
       return state
   }

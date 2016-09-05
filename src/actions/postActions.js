@@ -32,8 +32,15 @@ export const getPostNext = (page=1) => {
     }
 }
 
-export const changeScene = (title) => {
+export const getpostDetail = (id) => {
     return (dispatch) => {
-        dispatch({ type: types.SCENE_CHANGE , title:title })
+        return fetch(`${env.host}/topic/${id}`)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            dispatch({ type: types.FETCH_POST_DETAIL, postDetail :responseJson.data })
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 }

@@ -9,7 +9,6 @@ class HomeView extends Component {
   render() {
     return (
       <View style={{flex:1}}>
-          <Header title={this.props.currentSceneTitle}/>
           <Navigation
               component={PostList}
           />
@@ -17,6 +16,7 @@ class HomeView extends Component {
     );
   }
 }
+//<Header title={this.props.currentSceneTitle}/>
 
 export default connect(
   state => ({

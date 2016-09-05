@@ -2,31 +2,45 @@
 import React, {Component} from 'react'
 import {
   View,
-  Navigator
+  NavigatorIOS,
+  Text ,
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
+import { connect } from 'react-redux'
+import Icon from 'react-native-vector-icons/Ionicons'
+
+import * as appActions from '../actions/appActions'
 
 
-export default class Counter extends Component {
+class Navigation extends Component {
   render() {
+    let {changeScene} = this.props;
     return (
-      <Navigator
-        initialRoute={{ name: '', component: this.props.component, index: 0 }}
-        configureScene={(route) => {
-          if (route.name == 'commentAdd' || route.name == 'postAdd') {
-              return Navigator.SceneConfigs.FloatFromBottom
-          } else {
-              return Navigator.SceneConfigs.FloatFromRight
+      <NavigatorIOS
+        ref="nav"
+        initialRoute={{ 
+          title: '主页', 
+          component: this.props.component, 
+          index: 0 ,
+          rightButtonTitle:'发帖' ,
+          onRightButtonPress: () => {
+            alert('Ok');
           }
-        }
-        }
-        renderScene={(route, navigator) => {
-          const Component = route.component;
-          return (
-            <View style={{ flex: 1 }}>
-              <Component navigator={navigator} route={route} {...route.passProps}/>
-            </View>
-          );
-        } }/>
+        }}
+        style={{flex: 1}}
+        />
     )
   }
 }
+
+/*
+this.refs.nav.navigator.push({
+              title: "test",
+              component: EmptyPage,
+              rightButtonTitle: 'Cancel',
+              onRightButtonPress: () => { this.refs.nav.navigator.pop(); }
+            });
+ */
+
+export default Navigation;
