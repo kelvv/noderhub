@@ -10,11 +10,12 @@ import {
 import { bindActionCreators } from 'redux'
 import * as appActions from './actions/appActions'
 import { connect } from 'react-redux'
-import HomeView from './containers/view/HomeView'
-import WorkView from './containers/view/WorkView'
-import MeView from './containers/view/MeView'
+import Navigation from './components/Navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import TabNavigator from 'react-native-tab-navigator'
+import PostList from './containers/post/PostList'
+import WorkPage from './containers/work/WorkPage'
+import SettingPage from './containers/setting/SettingPage'
 
 var HTMLView = require('react-native-htmlview')
 
@@ -38,7 +39,17 @@ class noderhub extends Component {
                     renderSelectedIcon={() => <Icon name={ 'ios-home' } size={25} color={'#4E78E7'}/>}
                     badgeText=""
                     onPress={() => setSelectedTab('home')}>
-                    <HomeView/>
+                    <Navigation
+                        route={{ 
+                            title: '主页', 
+                            component: PostList, 
+                            index: 0 ,
+                            rightButtonTitle:'发帖' ,
+                            onRightButtonPress: () => {
+                            alert('Ok');
+                            }
+                        }}
+                    />
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={selectedTab === 'work'}
@@ -47,7 +58,13 @@ class noderhub extends Component {
                     renderSelectedIcon={() => <Icon name={ 'ios-man' } size={25} color={'#4E78E7'}/>}
                     badgeText=""
                     onPress={() => setSelectedTab('work')}>
-                    <WorkView/>
+                    <Navigation
+                        route={{ 
+                            title: '招聘', 
+                            component: WorkPage, 
+                            index: 0 
+                        }}
+                    />
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={selectedTab === 'me'}
@@ -56,7 +73,13 @@ class noderhub extends Component {
                     renderSelectedIcon={() => <Icon name={ 'ios-person' } size={25} color={'#4E78E7'}/>}
                     badgeText=""
                     onPress={() => setSelectedTab('me')}>
-                    <MeView/>
+                    <Navigation
+                        route={{ 
+                            title: '我的', 
+                            component: SettingPage, 
+                            index: 0 
+                        }}
+                    />
                 </TabNavigator.Item>
             </TabNavigator>
         );
