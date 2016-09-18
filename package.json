@@ -10,6 +10,7 @@
     "moment": "^2.14.1",
     "react": "15.2.1",
     "react-native": "0.31.0",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-gifted-listview": "0.0.15",
     "react-native-gifted-spinner": "^0.1.0",
     "react-native-html-render": "^1.0.4",
